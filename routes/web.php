@@ -17,4 +17,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Mypage TOP画面
+Route::get('/mypage', 'Mypage\HomeController@index');
+
+// 会員情報 トップ画面
+Route::any('/mypage/myinfo', 'Mypage\InfoChangeController@index');
+// 会員情報 編集画面
+Route::any('/mypage/myinfo/edit', 'Mypage\InfoChangeController@edit');
+// 会員情報 編集確認画面
+Route::any('/mypage/myinfo/edit/check', 'Mypage\InfoChangeController@check');
+// 会員情報 編集完了画面
+Route::any('/mypage/myinfo/edit/done', 'Mypage\InfoChangeController@done');
+
+// ホストになる TOP画面
+Route::any('/mypage/behost', 'Mypage\BeHostController@index');
+// ホストになる 確認画面
+Route::any('/mypage/behost/check', 'Mypage\BeHostController@check');
+// ホストになる 完了画面
+Route::any('/mypage/behost/check/done', 'Mypage\BeHostController@done');
