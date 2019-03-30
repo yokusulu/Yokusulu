@@ -3,7 +3,11 @@ use Carbon\Carbon;
 use Faker\Generator as Faker;
 
 $factory->define(App\House::class, function (Faker $faker) {
-    $names = [
+
+    $carbon = new Carbon();
+
+    $user_ids    = App\User::pluck('id')->all();
+    $names       = [
         "コーポグランデュオ",
         "モンシャトー加藤",
         "ホテルエリゼア",
@@ -12,16 +16,7 @@ $factory->define(App\House::class, function (Faker $faker) {
         "ゲートパークロゼッタ",
         "コインスペース",
     ];
-    $host_names = [
-        "松岡修造",
-        "安倍晋三",
-        "織田信長",
-        "石田三成",
-        "高杉晋作",
-        "田中みな実",
-        "薬師丸ひろ子",
-    ];
-    $zips = [
+    $zips        = [
         "1912342",
         "7382283",
         "5328832",
@@ -42,7 +37,7 @@ $factory->define(App\House::class, function (Faker $faker) {
         "鹿児島県",
         "沖縄県",
     ];
-    $citys = [
+    $citys       = [
         "徳山市",
         "永田市",
         "下関市",
@@ -50,7 +45,7 @@ $factory->define(App\House::class, function (Faker $faker) {
         "鳥取市",
         "桜丘市",
     ];
-    $wards = [
+    $wards       = [
         "武久町",
         "久我山",
         "日野本町",
@@ -63,7 +58,7 @@ $factory->define(App\House::class, function (Faker $faker) {
         "栄市",
         "町田西町",
     ];
-    $addresses = [
+    $addresses   = [
         "3-2-13",
         "7-2-19",
         "5-4-3",
@@ -72,7 +67,7 @@ $factory->define(App\House::class, function (Faker $faker) {
         "7-2-32",
         "5-44-2",
     ];
-    $prices = [
+    $prices      = [
         4000,
         6000,
         4500,
@@ -83,22 +78,24 @@ $factory->define(App\House::class, function (Faker $faker) {
         11900,
         4400,
     ];
-    $disables = [
-			0,
-			1,
-	];
-    $carbon = new Carbon();
+    $disables    = [
+        0,
+        1,
+    ];
+
     return [
-        'name' => $faker->randomElement($names),
-        'host_name' => $faker->randomElement($host_names),
-        'zip' => $faker->randomElement($zips),
+        'name'       => $faker->randomElement($names),
+        'users_id'   => $faker->randomElement($user_ids),
+        'zip'        => $faker->randomElement($zips),
         'prefecture' => $faker->randomElement($prefectures),
-        'city' => $faker->randomElement($citys),
-        'ward' => $faker->randomElement($wards),
-        'address' => $faker->randomElement($addresses),
-        'price' => $faker->randomElement($prices),
-        'del_flg' => $faker->randomElement($disables),
-        'created_at' =>  $carbon->now(),
-		'updated_at' =>  $carbon->now(),
+        'city'       => $faker->randomElement($citys),
+        'ward'       => $faker->randomElement($wards),
+        'address'    => $faker->randomElement($addresses),
+        'price'      => $faker->randomElement($prices),
+        'del_flg'    => $faker->randomElement($disables),
+        'rent_start_date' => $carbon->format('2018-01-01'),
+        'rent_end_date'   => $carbon->format('2018-12-31'),
+        'created_at' => $carbon->now(),
+        'updated_at' => $carbon->now(),
     ];
 });

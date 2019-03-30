@@ -9,11 +9,11 @@ $factory->define(App\User::class, function (Faker $faker) {
 			"nakamura",
 			"yazima"
 	];
-	$emails = [
-			"test1@gmail.com",
-			"test2@gmail.com",
-			"test3@gmail.com"
-	];
+	// $emails = [
+	// 		"test1@gmail.com",
+	// 		"test2@gmail.com",
+	// 		"test3@gmail.com"
+	// ];
 	$disables = [
 			0,
 			1
@@ -21,7 +21,7 @@ $factory->define(App\User::class, function (Faker $faker) {
 	$carbon = new Carbon();
 	return [
 		'name'    =>     $faker->randomElement($names),
-		'email'   =>     $faker->randomElement($emails),
+		'email'   =>     $faker->safeEmail(),
 		'password'   =>  Hash::make($faker->password()),
 		'del_flg'     => $faker->randomElement($disables),
 		'created_at' =>  $carbon->now(),

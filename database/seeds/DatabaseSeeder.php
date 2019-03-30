@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
 		$this->call(Detail_housesTableSeeder::class);
 		$this->call(Disable_booking_datesTableSeeder::class);
 		$this->call(House_imagesTableSeeder::class);
+		$this->call(BookingsTableSeeder::class);
 	}
 }
