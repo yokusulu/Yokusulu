@@ -9,23 +9,29 @@ use Illuminate\Validation\Rule;
 use App\User;
 use App\Host_user;
 use App\House;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class InfoChangeController extends Controller {
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 
 	// 会員情報 TOP画面
 	public function index () {
-		//authからデータ取れるまでは仮で配列に値を当て込んておく。
-		$login_info["name"] = "a";
-		$login_info["email"] = "abc@gmail.com";
+		$login_info = Auth::user();
 		return view("mypage.myinfo.index", compact('login_info'));
 	}
 
 	// 会員情報 編集画面
 	public function edit () {
-		//authからデータ取れるまでは仮で配列に値を当て込んておく。
-		$login_info["name"] = "a";
-		$login_info["email"] = "abc@gmail.com";
-		$login_info["password"] = "shun0626";
+		$login_info = Auth::user();
 		return view("mypage.myinfo.edit", compact('login_info'));
 	}
 
@@ -33,7 +39,7 @@ class InfoChangeController extends Controller {
 	public function check (request $request) {
 		$input_data = $request->all();
 		// バリデーション確認
-		$validator = $this->user_validate($input_data);
+		$validator = $this->user_validate($input_data, true);
 		// バリデーションエラーだった場合
 		if ($validator->fails()) {
 			return redirect('mypage/myinfo/edit')->withErrors($validator)->withInput();
@@ -45,42 +51,48 @@ class InfoChangeController extends Controller {
 	public function done (request $request) {
 		$input_data = $request->all();
 		// バリデーション確認
-		$validator = $this->user_confirm_validate($input_data);
+		$validator = $this->user_validate($input_data);
 		// バリデーションエラーだった場合
 		if ($validator->fails()) {
 			return redirect('mypage/myinfo/edit')->withErrors($validator)->withInput();
 		}
 		// ユーザー情報を変更する。
-		User::update_login_user($input_data);
+		$target = User::find(Auth::user()->id);
+		$target->fill([
+			'name' => $input_data["name"],
+			'email' => $input_data["email"],
+			'password' => Hash::make($input_data["password"]),
+		])->save();
 		// 二重登録防止
 		$request->session()->regenerateToken();
 		return view("mypage.myinfo.done");
 	}
 
 	// 会員情報 バリデーション
-	public function user_validate ($inputdata) {
+	public function user_validate ($inputdata, $first = null) {
+		$checkdata = [
+			'name' => 'required|max:50',
+			'email' => 'required|email',
+		];
+		// 最初のバリデーションの場合
+		if ($first) {
+			$data = [
+				'password_old' => [
+				'required', Rule::in([$inputdata["password_old"]])],
+				// ハッシュ化させたinputデータを入れる
+				'password_new' => 'alpha_num|confirmed|min:8|max:16',
+			];
+			$checkdata = $checkdata + $data;
+		}
+		// 2回目(最終確認用)のバリデーションの場合
+		else {
+			$data = [
+				'password' => 'alpha_num|min:8|max:16',
+			];
+			$checkdata = $checkdata + $data;
+		}
 		// バリデーションルール
-		$validator = Validator::make($inputdata, [
-		'name' => 'required|max:50',
-		'email' => 'required|email',
-		// ハッシュ化させたinputデータを入れる
-		'password_old' => [
-		'required', Rule::in(['aaaaaaaa']),
-		],
-		'password_new' => 'alpha_num|confirmed|min:8|max:16',
-	]);
+		$validator = Validator::make($inputdata, $checkdata);
 		return $validator;
 	}
-
-	// 会員情報(確認用) バリデーション
-	public function user_confirm_validate ($inputdata) {
-		// バリデーションルール
-		$validator = Validator::make($inputdata, [
-		'name' => 'required|max:50',
-		'email' => 'required|email',
-		'password' => 'alpha_num|min:8|max:16',
-	]);
-		return $validator;
-	}
-
 }

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Mypage;
 
+use App\User;
+use App\Host_user;
+use App\House;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,9 @@ class HomeController extends Controller
      */
     // マイページ TOP画面
     public function index () {
-        return view("mypage.index", compact('title'));
+        // ログイン情報を取得する。
+        $login_info = Auth::user();
+        $host_info = User::find($login_info->id)->host_user;
+        return view("mypage.index", compact('login_info','host_info'));
     }
 }

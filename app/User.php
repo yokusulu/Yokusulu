@@ -11,4 +11,14 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
+
+    // protected $with = ['host_user'];
+
+    public function host_user () {
+        return $this->hasOne("App\Host_user", "users_id");
+    }
+
+    public function house () {
+        return $this->hasOne("App\House", "users_id");
+    }
 }
