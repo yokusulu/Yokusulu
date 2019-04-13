@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function index () {
         // ログイン情報を取得する。
         $login_info = Auth::user();
-        $host_info = User::find($login_info->id)->host_user;
+        $host_info  = User::find($login_info->id)->host_user;
         return view("mypage.index", compact('login_info','host_info'));
     }
 }

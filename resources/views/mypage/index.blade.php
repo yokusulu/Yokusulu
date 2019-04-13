@@ -20,7 +20,9 @@
                             <a class="square_btn" href="">利用状況</a>
                         </div>
                         <div class="contents-list">
-                            <a class="square_btn" href="/mypage/behost">ホストになる</a>
+                             @if (empty($host_info))
+                                <a class="square_btn" href="/mypage/behost">ホストになる</a>
+                            @endif
                         </div>
                     </div>
                 </div>

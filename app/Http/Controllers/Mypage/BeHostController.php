@@ -9,15 +9,14 @@ use Illuminate\Validation\Rule;
 use App\User;
 use App\Host_user;
 use App\House;
+use Illuminate\Support\Facades\Auth;
 
 class BeHostController extends Controller {
 
 
 	// ホストになる TOP画面
 	public function index () {
-		//authからデータ取れるまでは仮で配列に値を当て込んておく。
-		$login_info["name"] = "a";
-		$login_info["email"] = "abc@gmail.com";
+		$login_info = Auth::User();
 		return view("mypage.behost.index", compact('login_info'));
 	}
 
@@ -31,13 +30,10 @@ class BeHostController extends Controller {
 		if ($validator->fails()) {
 			return redirect('mypage/behost')->withErrors($validator)->withInput();
 		}
-		// エラーがなければ、データ挿入用にデータを整形する
-		// $input["phone"] = $input["phone1"].$input["phone2"].$input["phone3"];
-		// $input["zip"] = $input["zip1"].$input["zip2"];
-			return view("mypage.behost.check", compact('input'));
+		return view("mypage.behost.check", compact('input'));
 	}
 
-	// ホストになる 確認画面
+	// ホストになる 完了画面
 	public function done (request $request) {
 		// 入力データを取得する。
 		$input = $request->all();
@@ -50,9 +46,9 @@ class BeHostController extends Controller {
 		// エラーがなければ、データ挿入用にデータを整形する
 		$input["phone"]    = $input["phone1"].$input["phone2"].$input["phone3"];
 		$input["zip"]      = $input["zip1"].$input["zip2"];
-		$input["login_id"] = 1; // 仮で数字をいれておく。
+		$input["users_id"] = Auth::User()->id;
 		// データを挿入する。
-		Host_user::insert_host_user($input);
+		Host_user::create($input);
 
 		return view("mypage.behost.done", compact('input'));
 	}
