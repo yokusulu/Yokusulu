@@ -7,11 +7,11 @@
             <div class="card">
                     <div class="content-box">
                         <div class="contents-list">
-                            {{-- @if (empty($host_info)) --}}
+                            @if (empty($host_info))
                                 <a class="square_btn" href="/mypage/myinfo">会員情報</a>
-                            {{-- @else --}}
-                                {{-- <a class="square_btn" href="/mypage/myhostinfo">会員情報</a> --}}
-                            {{-- @endif --}}
+                            @else
+                                <a class="square_btn" href="/mypage/myhostinfo">会員情報</a>
+                            @endif
                         </div>
                         <div class="contents-list">
                             <a class="square_btn" href="/mypage/myhouse">貸出</a>
