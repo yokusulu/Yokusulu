@@ -43,7 +43,7 @@
                         </tr>
                     </table>
                     <div class="myinfo_edit_btn_box">
-                        <button><a href="/mypage/myinfo/edit">編集画面へ</a></button>
+                        <button><a href="/mypage/myhostinfo/edit">編集画面へ</a></button>
                     </div>
                 </div>
             </div>

@@ -30,7 +30,7 @@ Route::any('/mypage/myinfo/edit/done', 'Mypage\InfoChangeController@done');
 // ホスト会員情報 トップ画面
 Route::any('/mypage/myhostinfo', 'Mypage\HostInfoChangeController@index');
 // 会員情報 編集画面
-// Route::any('/mypage/myinfo/edit', 'Mypage\InfoChangeController@edit');
+Route::any('/mypage/myinfo/edit', 'Mypage\InfoChangeController@edit');
 // 会員情報 編集確認画面
 // Route::any('/mypage/myinfo/edit/check', 'Mypage\InfoChangeController@check');
 // 会員情報 編集完了画面

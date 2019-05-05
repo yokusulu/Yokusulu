@@ -33,7 +33,8 @@ class HostInfoChangeController extends Controller {
 	// ホスト会員情報 編集画面
 	public function edit () {
 		$login_info = Auth::user();
-		return view("mypage.myinfo.edit", compact('login_info'));
+        $host_info  = User::find($login_info->id)->host_user;
+		return view("mypage.myhostinfo.edit", compact('login_info', 'host_info'));
 	}
 
 	// ホスト会員情報 編集確認画面
