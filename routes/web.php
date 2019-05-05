@@ -30,11 +30,11 @@ Route::any('/mypage/myinfo/edit/done', 'Mypage\InfoChangeController@done');
 // ホスト会員情報 トップ画面
 Route::any('/mypage/myhostinfo', 'Mypage\HostInfoChangeController@index');
 // 会員情報 編集画面
-Route::any('/mypage/myinfo/edit', 'Mypage\InfoChangeController@edit');
+Route::any('/mypage/myhostinfo/edit', 'Mypage\HostInfoChangeController@edit');
 // 会員情報 編集確認画面
-// Route::any('/mypage/myinfo/edit/check', 'Mypage\InfoChangeController@check');
+Route::any('/mypage/myhostinfo/edit/check', 'Mypage\HostInfoChangeController@check');
 // 会員情報 編集完了画面
-// Route::any('/mypage/myinfo/edit/done', 'Mypage\InfoChangeController@done');
+Route::any('/mypage/myhostinfo/edit/done', 'Mypage\HostInfoChangeController@done');
 
 // ホストになる TOP画面
 Route::any('/mypage/behost', 'Mypage\BeHostController@index');

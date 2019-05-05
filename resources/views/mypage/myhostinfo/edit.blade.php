@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-			<form action="/mypage/myinfo/edit/check" method="post">
+			<form action="/mypage/myhostinfo/edit/check" method="post">
 				{{ csrf_field() }}
 				<div class="user_info_table">
 					<table>
@@ -24,11 +24,11 @@
                         </tr>
                         <tr>
                             <th>郵便番号</th>
-                            <td><input type="text" name="zip" value="{{ $login_info->zip }}"></td>
+                            <td><input type="text" name="zip" value="{{ $host_info->zip }}"></td>
                         </tr>
                         <tr>
                             <th>都道府県</th>
-                            <td><input type="text" name="prefecture" value="{{ $login_info->prefecture }}"></td>
+                            <td><input type="text" name="prefecture" value="{{ $host_info->prefecture }}"></td>
                         </tr>
                         <tr>
 							<th>市区町村</th>
