@@ -42,3 +42,6 @@ Route::any('/mypage/behost', 'Mypage\BeHostController@index');
 Route::any('/mypage/behost/check', 'Mypage\BeHostController@check');
 // ホストになる 完了画面
 Route::any('/mypage/behost/check/done', 'Mypage\BeHostController@done');
+
+//検索結果
+Route::post('/search', 'SearchController@index')->name('search.index');
