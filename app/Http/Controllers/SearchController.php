@@ -11,22 +11,21 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        //入力情報を格納
-        $param = [
-            'prefecture' => $request->prefecture,
-        ];
-
+        //リクエストを取得
         $prefecture = $request->prefecture;
+        $price = $request->price;
 
         //入力値によってデータを取得
         if (isset($request->prefecture)) {
-            // $items = DB::select('select * from houses where prefecture = (:prefecture)', $param);
             $items = DB::table('houses')
-            ->where('prefecture','like','%'.$prefecture . '%')
-            ->orWhere('price','like','%'.$price.'%')
+            ->where('prefecture', 'like', '%'.$prefecture . '%')
             ->get();
-        } else{
-            $items = DB::select('select * from houses');
+        } elseif (isset($request->price)) {
+            $items = DB::table('houses')
+            ->where('price', '<', $price)
+            ->get();
+        } else {
+            $items = DB::table('houses')->get();
         }
 
         return view('search.index', ['items' => $items]);
